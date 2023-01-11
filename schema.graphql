@@ -1,0 +1,26 @@
+type Config @entity(immutable: true) {
+  id: Bytes!
+  config: BigInt! # uint256
+  id: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type URI @entity(immutable: true) {
+  id: Bytes!
+  uri: String! # string
+  id: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type Vendor @entity(immutable: true) {
+  id: Bytes!
+  vendor: Bytes! # address
+  id: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
