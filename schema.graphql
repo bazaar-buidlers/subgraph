@@ -1,26 +1,27 @@
-type Config @entity(immutable: true) {
-  id: Bytes!
-  config: BigInt! # uint256
-  id: BigInt! # uint256
-  blockNumber: BigInt!
-  blockTimestamp: BigInt!
-  transactionHash: Bytes!
+type Account @entity {
+  id:       Bytes!
+  listings: [Item!]!    @derivedFrom(field: "vendor")
+  balances: [Balance!]! @derivedFrom(field: "account")
 }
 
-type URI @entity(immutable: true) {
-  id: Bytes!
-  uri: String! # string
-  id: BigInt! # uint256
-  blockNumber: BigInt!
-  blockTimestamp: BigInt!
-  transactionHash: Bytes!
+type Balance @entity {
+  id:      ID!
+  account: Account!
+  item:    Item!
+  value:   BigInt!
 }
 
-type Vendor @entity(immutable: true) {
-  id: Bytes!
-  vendor: Bytes! # address
-  id: BigInt! # uint256
-  blockNumber: BigInt!
-  blockTimestamp: BigInt!
-  transactionHash: Bytes!
+type Item @entity {
+  id:     ID!
+  vendor: Account!
+  config: BigInt!
+  uri:    String!
+  prices: [Price!]! @derivedFrom(field: "item")
+}
+
+type Price @entity {
+  id:    ID!
+  item:  Item!
+  value: BigInt!
+  erc20: Bytes!
 }

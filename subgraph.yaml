@@ -4,18 +4,17 @@ schema:
 dataSources:
   - kind: ethereum
     name: Catalog
-    network: arbitrum-one
+    network: localhost
     source:
-      address: "0x5FbDB2315678afecb367f032d93F642f64180aa3"
       abi: Catalog
+      address: "0x5FbDB2315678afecb367f032d93F642f64180aa3"
+      startBlock: 0
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
       language: wasm/assemblyscript
       entities:
-        - Config
-        - URI
-        - Vendor
+        - Item
       abis:
         - name: Catalog
           file: ./abis/Catalog.json
@@ -27,3 +26,32 @@ dataSources:
         - event: Vendor(address,indexed uint256)
           handler: handleVendor
       file: ./src/catalog.ts
+  - kind: ethereum
+    name: Bazaar
+    network: localhost
+    source:
+      abi: Bazaar
+      address: "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512"
+      startBlock: 0
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Account
+        - Balance
+        - Item
+        - Price
+      abis:
+        - name: Bazaar
+          file: ./abis/Bazaar.json
+      eventHandlers:
+        - event: Appraise(uint256,address,indexed uint256)
+          handler: handleAppraise
+        - event: TransferBatch(indexed address,indexed address,indexed
+            address,uint256[],uint256[])
+          handler: handleTransferBatch
+        - event: TransferSingle(indexed address,indexed address,indexed
+            address,uint256,uint256)
+          handler: handleTransferSingle
+      file: ./src/bazaar.ts

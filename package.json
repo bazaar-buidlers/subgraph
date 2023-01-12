@@ -1,18 +1,16 @@
 {
-  "name": "testnet",
-  "license": "UNLICENSED",
+  "name": "@bazaar-buidlers/subgraph",
+  "license": "MIT",
   "scripts": {
     "codegen": "graph codegen",
     "build": "graph build",
-    "deploy": "graph deploy --node https://api.thegraph.com/deploy/ bazaar-buidlers/testnet",
-    "create-local": "graph create --node http://localhost:8020/ bazaar-buidlers/testnet",
-    "remove-local": "graph remove --node http://localhost:8020/ bazaar-buidlers/testnet",
-    "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 bazaar-buidlers/testnet",
-    "test": "graph test"
+    "deploy": "graph deploy --node https://api.thegraph.com/deploy/ bazaar-buidlers/arbitrum",
+    "create-local": "graph create --node http://localhost:8020/ bazaar-buidlers/arbitrum",
+    "remove-local": "graph remove --node http://localhost:8020/ bazaar-buidlers/arbitrum",
+    "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 --network localhost bazaar-buidlers/arbitrum"
   },
   "dependencies": {
     "@graphprotocol/graph-cli": "0.37.2",
     "@graphprotocol/graph-ts": "0.29.1"
-  },
-  "devDependencies": { "matchstick-as": "0.5.0" }
+  }
 }
