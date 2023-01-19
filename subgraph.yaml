@@ -3,35 +3,11 @@ schema:
   file: ./schema.graphql
 dataSources:
   - kind: ethereum
-    name: Catalog
-    network: localhost
-    source:
-      abi: Catalog
-      address: "0x5FbDB2315678afecb367f032d93F642f64180aa3"
-      startBlock: 0
-    mapping:
-      kind: ethereum/events
-      apiVersion: 0.0.7
-      language: wasm/assemblyscript
-      entities:
-        - Item
-      abis:
-        - name: Catalog
-          file: ./abis/Catalog.json
-      eventHandlers:
-        - event: Config(uint256,indexed uint256)
-          handler: handleConfig
-        - event: URI(string,indexed uint256)
-          handler: handleURI
-        - event: Vendor(address,indexed uint256)
-          handler: handleVendor
-      file: ./src/catalog.ts
-  - kind: ethereum
     name: Bazaar
     network: localhost
     source:
       abi: Bazaar
-      address: "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512"
+      address: "0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9"
       startBlock: 0
     mapping:
       kind: ethereum/events
@@ -40,7 +16,7 @@ dataSources:
       entities:
         - Account
         - Balance
-        - Item
+        - Listing
         - Price
       abis:
         - name: Bazaar
@@ -48,10 +24,16 @@ dataSources:
       eventHandlers:
         - event: Appraise(uint256,address,indexed uint256)
           handler: handleAppraise
+        - event: Configure(uint256,uint256,uint96,indexed uint256)
+          handler: handleConfigure
         - event: TransferBatch(indexed address,indexed address,indexed
             address,uint256[],uint256[])
           handler: handleTransferBatch
         - event: TransferSingle(indexed address,indexed address,indexed
             address,uint256,uint256)
           handler: handleTransferSingle
+        - event: TransferVendor(address,indexed uint256)
+          handler: handleTransferVendor
+        - event: URI(string,indexed uint256)
+          handler: handleURI
       file: ./src/bazaar.ts

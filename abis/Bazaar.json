@@ -1,21 +1,5 @@
 [
   {
-    "inputs": [
-      {
-        "internalType": "contract Catalog",
-        "name": "_catalog",
-        "type": "address"
-      },
-      {
-        "internalType": "uint96",
-        "name": "_feeNumerator",
-        "type": "uint96"
-      }
-    ],
-    "stateMutability": "nonpayable",
-    "type": "constructor"
-  },
-  {
     "anonymous": false,
     "inputs": [
       {
@@ -26,7 +10,7 @@
       },
       {
         "indexed": false,
-        "internalType": "contract IERC20",
+        "internalType": "address",
         "name": "erc20",
         "type": "address"
       },
@@ -69,38 +53,44 @@
     "anonymous": false,
     "inputs": [
       {
-        "indexed": true,
-        "internalType": "address",
-        "name": "previousOwner",
-        "type": "address"
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "config",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "limit",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint96",
+        "name": "royalty",
+        "type": "uint96"
       },
       {
         "indexed": true,
-        "internalType": "address",
-        "name": "newOwner",
-        "type": "address"
+        "internalType": "uint256",
+        "name": "id",
+        "type": "uint256"
       }
     ],
-    "name": "OwnershipTransferStarted",
+    "name": "Configure",
     "type": "event"
   },
   {
     "anonymous": false,
     "inputs": [
       {
-        "indexed": true,
-        "internalType": "address",
-        "name": "previousOwner",
-        "type": "address"
-      },
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "newOwner",
-        "type": "address"
+        "indexed": false,
+        "internalType": "uint8",
+        "name": "version",
+        "type": "uint8"
       }
     ],
-    "name": "OwnershipTransferred",
+    "name": "Initialized",
     "type": "event"
   },
   {
@@ -182,6 +172,25 @@
     "inputs": [
       {
         "indexed": false,
+        "internalType": "address",
+        "name": "vendor",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "uint256",
+        "name": "id",
+        "type": "uint256"
+      }
+    ],
+    "name": "TransferVendor",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
         "internalType": "string",
         "name": "value",
         "type": "string"
@@ -198,9 +207,15 @@
   },
   {
     "inputs": [],
-    "name": "acceptOwnership",
-    "outputs": [],
-    "stateMutability": "nonpayable",
+    "name": "FEE_DENOMINATOR",
+    "outputs": [
+      {
+        "internalType": "uint96",
+        "name": "",
+        "type": "uint96"
+      }
+    ],
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -211,7 +226,7 @@
         "type": "uint256"
       },
       {
-        "internalType": "contract IERC20[]",
+        "internalType": "address[]",
         "name": "erc20s",
         "type": "address[]"
       },
@@ -275,13 +290,52 @@
     "type": "function"
   },
   {
-    "inputs": [],
-    "name": "catalog",
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "id",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "config",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "limit",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint96",
+        "name": "royalty",
+        "type": "uint96"
+      }
+    ],
+    "name": "configure",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "payee",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "erc20",
+        "type": "address"
+      }
+    ],
+    "name": "depositsOf",
     "outputs": [
       {
-        "internalType": "contract Catalog",
+        "internalType": "uint256",
         "name": "",
-        "type": "address"
+        "type": "uint256"
       }
     ],
     "stateMutability": "view",
@@ -302,7 +356,7 @@
   },
   {
     "inputs": [],
-    "name": "feeDenominator",
+    "name": "feeNumerator",
     "outputs": [
       {
         "internalType": "uint96",
@@ -314,16 +368,21 @@
     "type": "function"
   },
   {
-    "inputs": [],
-    "name": "feeNumerator",
-    "outputs": [
+    "inputs": [
       {
         "internalType": "uint96",
-        "name": "",
+        "name": "_feeNumerator",
         "type": "uint96"
+      },
+      {
+        "internalType": "contract Escrow",
+        "name": "_escrow",
+        "type": "address"
       }
     ],
-    "stateMutability": "view",
+    "name": "initialize",
+    "outputs": [],
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -353,6 +412,91 @@
   {
     "inputs": [
       {
+        "internalType": "uint256",
+        "name": "config",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "limit",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint96",
+        "name": "royalty",
+        "type": "uint96"
+      },
+      {
+        "internalType": "string",
+        "name": "tokenURI",
+        "type": "string"
+      }
+    ],
+    "name": "list",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "id",
+        "type": "uint256"
+      }
+    ],
+    "name": "listingInfo",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "address",
+            "name": "vendor",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "config",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "supply",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "limit",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint96",
+            "name": "royalty",
+            "type": "uint96"
+          },
+          {
+            "internalType": "string",
+            "name": "uri",
+            "type": "string"
+          }
+        ],
+        "internalType": "struct Listings.Listing",
+        "name": "",
+        "type": "tuple"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
         "internalType": "address",
         "name": "to",
         "type": "address"
@@ -368,9 +512,14 @@
         "type": "uint256"
       },
       {
-        "internalType": "contract IERC20",
+        "internalType": "address",
         "name": "erc20",
         "type": "address"
+      },
+      {
+        "internalType": "bytes",
+        "name": "data",
+        "type": "bytes"
       }
     ],
     "name": "mint",
@@ -392,19 +541,6 @@
     "type": "function"
   },
   {
-    "inputs": [],
-    "name": "pendingOwner",
-    "outputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
     "inputs": [
       {
         "internalType": "uint256",
@@ -412,7 +548,7 @@
         "type": "uint256"
       },
       {
-        "internalType": "contract IERC20",
+        "internalType": "address",
         "name": "erc20",
         "type": "address"
       }
@@ -426,13 +562,6 @@
       }
     ],
     "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "renounceOwnership",
-    "outputs": [],
-    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -551,42 +680,6 @@
   {
     "inputs": [
       {
-        "internalType": "uint256",
-        "name": "id",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "limit",
-        "type": "uint256"
-      }
-    ],
-    "name": "setLimit",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "id",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint96",
-        "name": "fee",
-        "type": "uint96"
-      }
-    ],
-    "name": "setRoyalty",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
         "internalType": "bytes4",
         "name": "interfaceId",
         "type": "bytes4"
@@ -609,17 +702,16 @@
         "internalType": "uint256",
         "name": "id",
         "type": "uint256"
-      }
-    ],
-    "name": "totalLimit",
-    "outputs": [
+      },
       {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
+        "internalType": "address",
+        "name": "vendor",
+        "type": "address"
       }
     ],
-    "stateMutability": "view",
+    "name": "transferVendor",
+    "outputs": [],
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -628,28 +720,14 @@
         "internalType": "uint256",
         "name": "id",
         "type": "uint256"
-      }
-    ],
-    "name": "totalSupply",
-    "outputs": [
+      },
       {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
+        "internalType": "string",
+        "name": "tokenURI",
+        "type": "string"
       }
     ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "newOwner",
-        "type": "address"
-      }
-    ],
-    "name": "transferOwnership",
+    "name": "update",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -681,7 +759,7 @@
         "type": "address"
       },
       {
-        "internalType": "contract IERC20",
+        "internalType": "address",
         "name": "erc20",
         "type": "address"
       }

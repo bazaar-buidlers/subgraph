@@ -4,10 +4,10 @@
   "scripts": {
     "codegen": "graph codegen",
     "build": "graph build",
-    "deploy": "graph deploy --node https://api.thegraph.com/deploy/ bazaar-buidlers/arbitrum",
-    "create-local": "graph create --node http://localhost:8020/ bazaar-buidlers/arbitrum",
-    "remove-local": "graph remove --node http://localhost:8020/ bazaar-buidlers/arbitrum",
-    "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 --network localhost bazaar-buidlers/arbitrum"
+    "deploy": "graph deploy --node https://api.thegraph.com/deploy/ bazaar-buidlers/bazaar",
+    "create-local": "graph create --node http://localhost:8020/ bazaar-buidlers/bazaar",
+    "remove-local": "graph remove --node http://localhost:8020/ bazaar-buidlers/bazaar",
+    "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 --network localhost bazaar-buidlers/bazaar"
   },
   "dependencies": {
     "@graphprotocol/graph-cli": "0.37.2",

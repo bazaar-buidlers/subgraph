@@ -1,27 +1,29 @@
 type Account @entity {
   id:       Bytes!
-  listings: [Item!]!    @derivedFrom(field: "vendor")
+  listings: [Listing!]! @derivedFrom(field: "vendor")
   balances: [Balance!]! @derivedFrom(field: "account")
 }
 
 type Balance @entity {
   id:      ID!
   account: Account!
-  item:    Item!
+  listing: Listing!
   value:   BigInt!
 }
 
-type Item @entity {
-  id:     ID!
-  vendor: Account!
-  config: BigInt!
-  uri:    String!
-  prices: [Price!]! @derivedFrom(field: "item")
+type Listing @entity {
+  id:      ID!
+  vendor:  Account!
+  config:  BigInt!
+  limit:   BigInt!
+  royalty: BigInt!
+  uri:     String!
+  prices:  [Price!]! @derivedFrom(field: "listing")
 }
 
 type Price @entity {
-  id:    ID!
-  item:  Item!
-  value: BigInt!
-  erc20: Bytes!
+  id:      ID!
+  listing: Listing!
+  value:   BigInt!
+  erc20:   Bytes!
 }
