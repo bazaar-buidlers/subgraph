@@ -11,18 +11,14 @@ import {
 } from '../generated/Bazaar/Bazaar';
 
 export function handleAppraise(event: Appraise): void {
-  const erc20 = event.params.erc20;
-  const listingId = event.params.id.toString();
-
-  const price = fetchPrice(erc20, listingId);
+  const listing = fetchListing(event.params.id);
+  const price = fetchPrice(event.params.erc20, listing);
   price.value = event.params.price;
   price.save();
 }
 
 export function handleConfigure(event: Configure): void {
-  const listingId = event.params.id.toString();
-  const listing = fetchListing(listingId);
-
+  const listing = fetchListing(event.params.id);
   listing.config = event.params.config;
   listing.limit = event.params.limit;
   listing.royalty = event.params.royalty;
@@ -60,64 +56,72 @@ export function handleTransferBatch(event: TransferBatch): void {
 }
 
 export function handleTransferVendor(event: TransferVendor): void {
-  const listingId = event.params.id.toString();
-  const listing = fetchListing(listingId);
-
-  listing.vendor = event.params.vendor;
+  const account = fetchAccount(event.params.vendor);
+  const listing = fetchListing(event.params.id);
+  listing.vendor = account.id;
   listing.save();
 }
 
 export function handleURI(event: URI): void {
-  const listingId = event.params.id.toString();
-  const listing = fetchListing(listingId);
-
+  const listing = fetchListing(event.params.id);
   listing.uri = event.params.value;
   listing.save();
 }
 
-function fetchListing(id: String): Listing {
-  let listing = Listing.load(id);
-  if (listing == null) {
-    listing = new Listing(id);
-    listing.vendor = Address.zero();
-    listing.config = BigInt.zero();
-    listing.royalty = BigInt.zero();
-    listing.uri = "";
-  }
-  return listing as Listing;
-}
-
-function fetchBalance(accountId: Address, listingId: String): Balance {
-  const balanceId = accountId.toHex().concat('/').concat(listingId);
-  let balance = Balance.load(balanceId);
-  if (balance == null) {
-    balance = new Balance(balanceId);
-    balance.account = accountId;
-    balance.listing = listingId;
-    balance.value = BigInt.zero();
-  }
-  return balance as Balance;
-}
-
-function fetchPrice(erc20: Address, listingId: String): Price {
-  const priceId = erc20.toHex().concat('/').concat(listingId);
-  let price = Price.load(priceId);
-  if (price == null) {
-    const price = new Price(priceId);
-    price.listing = listingId;
-    price.erc20 = erc20;
-  }
-  return price as Price;
-}
-
 function updateBalance(address: Address, id: BigInt, value: BigInt): void {
-  let account = Account.load(address);
-  if (account == null) {
-    account = new Account(address);
-    account.save();
-  }
-
-  const balance = fetchBalance(address, id.toString());
+  const account = fetchAccount(address);
+  const listing = fetchListing(id);
+  const balance = fetchBalance(account, listing);
   balance.value = balance.value.plus(value);
   balance.save();
+}
+
+function fetchAccount(id: Address): Account {
+  const existing = Account.load(id);
+  if (existing != null) return existing;
+
+  const account = new Account(id);
+  account.save();
+  return account;
+}
+
+function fetchListing(id: BigInt): Listing {
+  const existing = Listing.load(id.toString());
+  if (existing != null) return existing;
+
+  const listing = new Listing(id.toString());
+  listing.vendor = Address.zero();
+  listing.config = BigInt.zero();
+  listing.limit = BigInt.zero();
+  listing.royalty = BigInt.zero();
+  listing.uri = "";
+  listing.save();
+  return listing;
+}
+
+function fetchBalance(account: Account, listing: Listing): Balance {
+  const id = account.id.toHex().concat('/').concat(listing.id);
+  
+  const existing = Balance.load(id);
+  if (existing != null) return existing;
+
+  const balance = new Balance(id);
+  balance.account = account.id;
+  balance.listing = listing.id;
+  balance.value = BigInt.zero();
+  balance.save();
+  return balance;
+}
+
+function fetchPrice(erc20: Address, listing: Listing): Price {
+  const id = erc20.toHex().concat('/').concat(listing.id);
+
+  const existing = Price.load(id);
+  if (existing != null) return existing;
+
+  const price = new Price(id);
+  price.listing = listing.id;
+  price.erc20 = erc20;
+  price.save();
+  return price;
 }
