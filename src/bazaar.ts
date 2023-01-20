@@ -122,6 +122,7 @@ function fetchPrice(erc20: Address, listing: Listing): Price {
   const price = new Price(id);
   price.listing = listing.id;
   price.erc20 = erc20;
+  price.value = BigInt.zero();
   price.save();
   return price;
 }
