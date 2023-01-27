@@ -4,11 +4,11 @@ schema:
 dataSources:
   - kind: ethereum
     name: Bazaar
-    network: localhost
+    network: arbitrum-goerli
     source:
       abi: Bazaar
-      address: "0xcf7ed3acca5a467e9e704c703e8d87f634fb0fc9"
-      startBlock: 0
+      address: "0x76d8b9e38D9BAa56aB62fd832ECf0eEd79d7e7E9"
+      startBlock: 5375514
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7

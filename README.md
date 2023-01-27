@@ -8,7 +8,14 @@ pnpm run codegen
 pnpm run build
 ```
 
-## Docker Compose
+## Deploy
+
+```
+graph auth --product hosted-service <access-token>
+graph deploy --product hosted-service --network arbitrum-goerli bazaar-buidlers/arbitrum-goerli
+```
+
+## Docker
 
 ```
 docker-compose up

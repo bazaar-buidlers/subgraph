@@ -3,11 +3,10 @@
   "license": "MIT",
   "scripts": {
     "codegen": "graph codegen",
-    "build": "graph build",
-    "deploy": "graph deploy --node https://api.thegraph.com/deploy/ bazaar-buidlers/bazaar",
-    "create-local": "graph create --node http://localhost:8020/ bazaar-buidlers/bazaar",
-    "remove-local": "graph remove --node http://localhost:8020/ bazaar-buidlers/bazaar",
-    "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 --network localhost bazaar-buidlers/bazaar"
+    "build": "graph codegen && graph build",
+    "create": "graph create --node http://localhost:8020/ bazaar-buidlers/localhost",
+    "remove": "graph remove --node http://localhost:8020/ bazaar-buidlers/localhost",
+    "deploy": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 --network localhost bazaar-buidlers/localhost"
   },
   "dependencies": {
     "@graphprotocol/graph-cli": "0.37.2",
