@@ -11,6 +11,7 @@ pnpm run build
 ## Deploy
 
 ```
+pnpm install -g @graphprotocol/graph-cli
 graph auth --product hosted-service <access-token>
 graph deploy --product hosted-service --network arbitrum-goerli bazaar-buidlers/arbitrum-goerli
 ```
