@@ -24,7 +24,7 @@ dataSources:
       eventHandlers:
         - event: Appraise(uint256,address,indexed uint256)
           handler: handleAppraise
-        - event: Configure(uint256,uint256,uint96,indexed uint256)
+        - event: Configure(uint256,uint256,uint256,uint96,indexed uint256)
           handler: handleConfigure
         - event: TransferBatch(indexed address,indexed address,indexed
             address,uint256[],uint256[])

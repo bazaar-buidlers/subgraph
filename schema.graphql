@@ -12,13 +12,15 @@ type Balance @entity {
 }
 
 type Listing @entity {
-  id:      ID!
-  vendor:  Account!
-  config:  BigInt!
-  limit:   BigInt!
-  royalty: BigInt!
-  uri:     String!
-  prices:  [Price!]! @derivedFrom(field: "listing")
+  id:        ID!
+  vendor:    Account!
+  config:    BigInt!
+  limit:     BigInt!
+  allow:     BigInt!
+  royalty:   BigInt!
+  uri:       String!
+  prices:    [Price!]!    @derivedFrom(field: "listing")
+  purchases: [Purchase!]! @derivedFrom(field: "listing")
 }
 
 type Price @entity {
@@ -26,4 +28,12 @@ type Price @entity {
   listing: Listing!
   value:   BigInt!
   erc20:   Bytes!
+}
+
+type Purchase @entity(immutable: true) {
+  id:        ID!
+  from:      Bytes!
+  to:        Bytes!
+  listing:   Listing!
+  blockTime: BigInt!
 }

@@ -1,5 +1,10 @@
 [
   {
+    "inputs": [],
+    "stateMutability": "nonpayable",
+    "type": "constructor"
+  },
+  {
     "anonymous": false,
     "inputs": [
       {
@@ -66,6 +71,12 @@
       },
       {
         "indexed": false,
+        "internalType": "uint256",
+        "name": "allow",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
         "internalType": "uint96",
         "name": "royalty",
         "type": "uint96"
@@ -91,6 +102,25 @@
       }
     ],
     "name": "Initialized",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "previousOwner",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "newOwner",
+        "type": "address"
+      }
+    ],
+    "name": "OwnershipTransferred",
     "type": "event"
   },
   {
@@ -206,19 +236,6 @@
     "type": "event"
   },
   {
-    "inputs": [],
-    "name": "FEE_DENOMINATOR",
-    "outputs": [
-      {
-        "internalType": "uint96",
-        "name": "",
-        "type": "uint96"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
     "inputs": [
       {
         "internalType": "uint256",
@@ -307,6 +324,11 @@
         "type": "uint256"
       },
       {
+        "internalType": "uint256",
+        "name": "allow",
+        "type": "uint256"
+      },
+      {
         "internalType": "uint96",
         "name": "royalty",
         "type": "uint96"
@@ -349,6 +371,19 @@
         "internalType": "contract Escrow",
         "name": "",
         "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "feeDenominator",
+    "outputs": [
+      {
+        "internalType": "uint96",
+        "name": "",
+        "type": "uint96"
       }
     ],
     "stateMutability": "view",
@@ -422,6 +457,11 @@
         "type": "uint256"
       },
       {
+        "internalType": "uint256",
+        "name": "allow",
+        "type": "uint256"
+      },
+      {
         "internalType": "uint96",
         "name": "royalty",
         "type": "uint96"
@@ -476,6 +516,11 @@
             "type": "uint256"
           },
           {
+            "internalType": "uint256",
+            "name": "allow",
+            "type": "uint256"
+          },
+          {
             "internalType": "uint96",
             "name": "royalty",
             "type": "uint96"
@@ -517,9 +562,9 @@
         "type": "address"
       },
       {
-        "internalType": "bytes",
-        "name": "data",
-        "type": "bytes"
+        "internalType": "bytes32[]",
+        "name": "proof",
+        "type": "bytes32[]"
       }
     ],
     "name": "mint",
@@ -562,6 +607,13 @@
       }
     ],
     "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "renounceOwnership",
+    "outputs": [],
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -694,6 +746,19 @@
       }
     ],
     "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "newOwner",
+        "type": "address"
+      }
+    ],
+    "name": "transferOwnership",
+    "outputs": [],
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {

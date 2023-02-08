@@ -1,5 +1,5 @@
-import { Address, BigInt } from '@graphprotocol/graph-ts'
-import { Account, Balance, Listing, Price } from '../generated/schema';
+import { Address, BigInt, ethereum } from '@graphprotocol/graph-ts'
+import { Account, Balance, Listing, Price, Purchase } from '../generated/schema';
 
 import {
   Appraise,
@@ -21,6 +21,7 @@ export function handleConfigure(event: Configure): void {
   const listing = fetchListing(event.params.id);
   listing.config = event.params.config;
   listing.limit = event.params.limit;
+  listing.allow = event.params.allow;
   listing.royalty = event.params.royalty;
   listing.save();
 }
@@ -37,6 +38,9 @@ export function handleTransferSingle(event: TransferSingle): void {
   if (to != Address.zero()) {
     updateBalance(to, id, value);
   }
+  if (from == Address.zero()) {
+    createPurchase(id, to, from, event);
+  }
 }
 
 export function handleTransferBatch(event: TransferBatch): void {
@@ -52,6 +56,9 @@ export function handleTransferBatch(event: TransferBatch): void {
     if (to != Address.zero()) {
       updateBalance(to, ids[i], values[i]);
     }
+    if (from == Address.zero()) {
+      createPurchase(ids[i], to, from, event, i);
+    }
   }
 }
 
@@ -66,6 +73,17 @@ export function handleURI(event: URI): void {
   const listing = fetchListing(event.params.id);
   listing.uri = event.params.value;
   listing.save();
+}
+
+function createPurchase(id: BigInt, to: Address, from: Address, event: ethereum.Event, index: number = 0): void {
+  const listing = fetchListing(id);
+  const purchaseId = [event.transaction.hash.toHex(), event.transactionLogIndex.toString(), index.toString()].join('/');
+  const purchase = new Purchase(purchaseId);
+  purchase.to = to;
+  purchase.from = from;
+  purchase.listing = listing.id;
+  purchase.blockTime = event.block.timestamp;
+  purchase.save();
 }
 
 function updateBalance(address: Address, id: BigInt, value: BigInt): void {
@@ -93,6 +111,7 @@ function fetchListing(id: BigInt): Listing {
   listing.vendor = Address.zero();
   listing.config = BigInt.zero();
   listing.limit = BigInt.zero();
+  listing.allow = BigInt.zero();
   listing.royalty = BigInt.zero();
   listing.uri = "";
   listing.save();
@@ -100,7 +119,7 @@ function fetchListing(id: BigInt): Listing {
 }
 
 function fetchBalance(account: Account, listing: Listing): Balance {
-  const id = account.id.toHex().concat('/').concat(listing.id);
+  const id = [account.id.toHex(), listing.id].join('/');
   
   const existing = Balance.load(id);
   if (existing != null) return existing;
@@ -114,7 +133,7 @@ function fetchBalance(account: Account, listing: Listing): Balance {
 }
 
 function fetchPrice(erc20: Address, listing: Listing): Price {
-  const id = erc20.toHex().concat('/').concat(listing.id);
+  const id = [erc20.toHex(), listing.id].join('/');
 
   const existing = Price.load(id);
   if (existing != null) return existing;
