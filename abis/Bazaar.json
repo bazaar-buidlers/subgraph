@@ -236,6 +236,19 @@
     "type": "event"
   },
   {
+    "inputs": [],
+    "name": "FEE_DENOMINATOR",
+    "outputs": [
+      {
+        "internalType": "uint96",
+        "name": "",
+        "type": "uint96"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
     "inputs": [
       {
         "internalType": "uint256",
@@ -378,19 +391,6 @@
   },
   {
     "inputs": [],
-    "name": "feeDenominator",
-    "outputs": [
-      {
-        "internalType": "uint96",
-        "name": "",
-        "type": "uint96"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
     "name": "feeNumerator",
     "outputs": [
       {
@@ -496,11 +496,6 @@
       {
         "components": [
           {
-            "internalType": "address",
-            "name": "vendor",
-            "type": "address"
-          },
-          {
             "internalType": "uint256",
             "name": "config",
             "type": "uint256"
@@ -519,6 +514,11 @@
             "internalType": "uint256",
             "name": "allow",
             "type": "uint256"
+          },
+          {
+            "internalType": "address",
+            "name": "vendor",
+            "type": "address"
           },
           {
             "internalType": "uint96",
@@ -542,19 +542,14 @@
   {
     "inputs": [
       {
-        "internalType": "address",
-        "name": "to",
-        "type": "address"
-      },
-      {
         "internalType": "uint256",
         "name": "id",
         "type": "uint256"
       },
       {
-        "internalType": "uint256",
-        "name": "amount",
-        "type": "uint256"
+        "internalType": "address",
+        "name": "to",
+        "type": "address"
       },
       {
         "internalType": "address",
@@ -814,24 +809,6 @@
       }
     ],
     "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address payable",
-        "name": "payee",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "erc20",
-        "type": "address"
-      }
-    ],
-    "name": "withdraw",
-    "outputs": [],
-    "stateMutability": "nonpayable",
     "type": "function"
   }
 ]

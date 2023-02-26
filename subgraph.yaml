@@ -7,8 +7,8 @@ dataSources:
     network: arbitrum-goerli
     source:
       abi: Bazaar
-      address: "0xff2DfB52C63417CD1f5bAB91b2eFa8Cd50537A81"
-      startBlock: 7122541
+      address: "0x4e67A42C43FEAe4AD066e0bdf373ae9076263d97"
+      startBlock: 9202204
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
