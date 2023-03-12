@@ -7,8 +7,8 @@
   },
   "arbitrum-goerli": {
     "Bazaar": {
-      "address": "0x4e67A42C43FEAe4AD066e0bdf373ae9076263d97",
-      "startBlock": 9202204
+      "address": "0x4B36Ab67E5Ac6d82a2AAd29071aB6B1b0E61592D",
+      "startBlock": 11073804
     }
   }
 }

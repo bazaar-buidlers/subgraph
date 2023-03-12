@@ -2,13 +2,13 @@ specVersion: 0.0.5
 schema:
   file: ./schema.graphql
 dataSources:
-  - kind: ethereum
-    name: Bazaar
+  - name: Bazaar
+    kind: ethereum
     network: arbitrum-goerli
     source:
       abi: Bazaar
       address: "0x4e67A42C43FEAe4AD066e0bdf373ae9076263d97"
-      startBlock: 9202204
+      startBlock: 0
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
@@ -28,9 +28,11 @@ dataSources:
           handler: handleAppraise
         - event: Configure(uint256,uint256,uint256,uint96,indexed uint256)
           handler: handleConfigure
-        - event: TransferBatch(indexed address,indexed address,indexed address,uint256[],uint256[])
+        - event: TransferBatch(indexed address,indexed address,indexed
+            address,uint256[],uint256[])
           handler: handleTransferBatch
-        - event: TransferSingle(indexed address,indexed address,indexed address,uint256,uint256)
+        - event: TransferSingle(indexed address,indexed address,indexed
+            address,uint256,uint256)
           handler: handleTransferSingle
         - event: TransferVendor(address,indexed uint256)
           handler: handleTransferVendor
@@ -42,6 +44,7 @@ dataSources:
 templates:
   - name: ListingMetadata
     kind: file/ipfs
+    network: arbitrum-goerli
     mapping:
       apiVersion: 0.0.7
       language: wasm/assemblyscript

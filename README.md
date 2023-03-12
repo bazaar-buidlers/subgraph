@@ -12,8 +12,8 @@ pnpm run build
 
 ```
 pnpm install -g @graphprotocol/graph-cli
-graph auth --product hosted-service <access-token>
-graph deploy --product hosted-service --network arbitrum-goerli bazaar-buidlers/arbitrum-goerli
+pnpm exec graph auth --product hosted-service <access-token>
+pnpm exec graph deploy --product hosted-service --network arbitrum-goerli bazaar-buidlers/arbitrum-goerli
 ```
 
 ## Docker
