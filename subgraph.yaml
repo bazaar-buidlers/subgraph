@@ -18,6 +18,8 @@ dataSources:
         - Balance
         - Listing
         - Price
+        - Purchase
+        - Review
       abis:
         - name: Bazaar
           file: ./abis/Bazaar.json
@@ -26,14 +28,27 @@ dataSources:
           handler: handleAppraise
         - event: Configure(uint256,uint256,uint256,uint96,indexed uint256)
           handler: handleConfigure
-        - event: TransferBatch(indexed address,indexed address,indexed
-            address,uint256[],uint256[])
+        - event: TransferBatch(indexed address,indexed address,indexed address,uint256[],uint256[])
           handler: handleTransferBatch
-        - event: TransferSingle(indexed address,indexed address,indexed
-            address,uint256,uint256)
+        - event: TransferSingle(indexed address,indexed address,indexed address,uint256,uint256)
           handler: handleTransferSingle
         - event: TransferVendor(address,indexed uint256)
           handler: handleTransferVendor
         - event: URI(string,indexed uint256)
           handler: handleURI
-      file: ./src/bazaar.ts
+        - event: Review(uint256,string,indexed address,indexed uint256)
+          handler: handleReview
+      file: ./src/mappings.ts
+templates:
+  - name: ListingMetadata
+    kind: file/ipfs
+    mapping:
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      file: ./src/metadata.ts
+      handler: handleListing
+      entities:
+        - ListingMetadata
+      abis:
+        - name: Bazaar
+          file: ./abis/Bazaar.json

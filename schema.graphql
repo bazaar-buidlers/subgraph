@@ -2,6 +2,7 @@ type Account @entity {
   id:       Bytes!
   listings: [Listing!]! @derivedFrom(field: "vendor")
   balances: [Balance!]! @derivedFrom(field: "account")
+  reviews:  [Review!]!  @derivedFrom(field: "account")
 }
 
 type Balance @entity {
@@ -19,8 +20,23 @@ type Listing @entity {
   allow:     BigInt!
   royalty:   BigInt!
   uri:       String!
-  prices:    [Price!]!    @derivedFrom(field: "listing")
-  purchases: [Purchase!]! @derivedFrom(field: "listing")
+  prices:    [Price!]!       @derivedFrom(field: "listing")
+  purchases: [Purchase!]!    @derivedFrom(field: "listing")
+  reviews:   [Review!]!      @derivedFrom(field: "listing")
+  metadata:  ListingMetadata
+}
+
+type ListingMetadata @entity(immutable: true) {
+  id:          ID!
+  name:        String!
+  description: String!
+  image:       String!
+  media:       [String!]!
+  status:      String!
+  platform:    String!
+  keywords:    [String!]!
+  content:     String!
+  allow:       [String!]!
 }
 
 type Price @entity {
@@ -32,8 +48,14 @@ type Price @entity {
 
 type Purchase @entity(immutable: true) {
   id:        ID!
-  from:      Bytes!
-  to:        Bytes!
   listing:   Listing!
   blockTime: BigInt!
+}
+
+type Review @entity {
+  id:      ID!
+  account: Account!
+  listing: Listing!
+  rating:  BigInt!
+  uri:     String!
 }
