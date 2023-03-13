@@ -1,3 +1,11 @@
+type _Schema_
+  @fulltext(
+    name: "listingSearch"
+    language: en
+    algorithm: rank
+    include: [{ entity: "ListingMetadata", fields: [{ name: "name" }, { name: "description" }] }]
+  )
+
 type Account @entity {
   id:       Bytes!
   listings: [Listing!]! @derivedFrom(field: "vendor")
