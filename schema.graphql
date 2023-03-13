@@ -19,6 +19,8 @@ type Listing @entity {
   limit:       BigInt!
   allow:       BigInt!
   royalty:     BigInt!
+  ratingTotal: BigInt!
+  ratingCount: BigInt!
   uri:         String!
   metadata:    ListingMetadata
   prices:      [Price!]!       @derivedFrom(field: "listing")

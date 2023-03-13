@@ -38,6 +38,8 @@ export function fetchListing(id: BigInt): Listing {
   listing.limit = BigInt.zero();
   listing.allow = BigInt.zero();
   listing.royalty = BigInt.zero();
+  listing.ratingTotal = BigInt.zero();
+  listing.ratingCount = BigInt.zero();
   listing.uri = "";
   listing.save();
   return listing;

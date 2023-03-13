@@ -104,11 +104,22 @@ export function handleReview(event: Review): void {
   const listing = fetchListing(event.params.id);
   const review = fetchReview(account, listing);
 
+  let ratingTotal = listing.ratingTotal;
+  let ratingCount = listing.ratingCount;
+
   if (review.created == BigInt.zero()) {
     review.created = event.block.timestamp;
+    ratingCount = BigInt.fromU64(1).plus(ratingCount);
+    ratingTotal = event.params.rating.plus(ratingTotal);
   } else {
     review.updated = event.block.timestamp;
+    ratingTotal = ratingTotal.minus(review.rating);
+    ratingTotal = ratingTotal.plus(event.params.rating);
   }
+
+  listing.ratingTotal = ratingTotal;
+  listing.ratingCount = ratingCount;
+  listing.save();
 
   review.metadata = event.params.uri;
   review.uri = event.params.uri;
