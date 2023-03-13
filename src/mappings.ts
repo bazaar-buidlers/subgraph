@@ -1,4 +1,4 @@
-import { Address } from '@graphprotocol/graph-ts';
+import { Address, BigInt } from '@graphprotocol/graph-ts';
 import { ListingMetadata} from '../generated/templates';
 
 import {
@@ -98,6 +98,13 @@ export function handleReview(event: Review): void {
   const account = fetchAccount(event.params.sender);
   const listing = fetchListing(event.params.id);
   const review = fetchReview(account, listing);
+
+  if (review.created == BigInt.zero()) {
+    review.created = event.block.timestamp;
+  } else {
+    review.updated = event.block.timestamp;
+  }
+
   review.uri = event.params.uri;
   review.rating = event.params.rating;
   review.save();

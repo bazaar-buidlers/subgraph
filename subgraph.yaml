@@ -7,8 +7,8 @@ dataSources:
     network: arbitrum-goerli
     source:
       abi: Bazaar
-      address: "0x4e67A42C43FEAe4AD066e0bdf373ae9076263d97"
-      startBlock: 0
+      address: "0x4B36Ab67E5Ac6d82a2AAd29071aB6B1b0E61592D"
+      startBlock: 11073804
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
@@ -52,6 +52,19 @@ templates:
       handler: handleListing
       entities:
         - ListingMetadata
+      abis:
+        - name: Bazaar
+          file: ./abis/Bazaar.json
+  - name: ReviewMetadata
+    kind: file/ipfs
+    network: arbitrum-goerli
+    mapping:
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      file: ./src/metadata.ts
+      handler: handleReview
+      entities:
+        - ReviewMetadata
       abis:
         - name: Bazaar
           file: ./abis/Bazaar.json

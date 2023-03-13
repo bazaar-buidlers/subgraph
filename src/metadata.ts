@@ -1,5 +1,5 @@
 import { json, Bytes, dataSource } from '@graphprotocol/graph-ts';
-import { ListingMetadata } from '../generated/schema';
+import { ListingMetadata, ReviewMetadata } from '../generated/schema';
 
 export function handleListing(data: Bytes): void {
   const value = json.fromBytes(data).toObject();
@@ -25,5 +25,16 @@ export function handleListing(data: Bytes): void {
   metadata.media = media ? media.toArray().map<string>(value => value.toString()) : [];
   metadata.keywords = keywords ? keywords.toArray().map<string>(value => value.toString()) : [];
   metadata.allow = allow ? allow.toArray().map<string>(value => value.toString()) : [];
+  metadata.save();
+}
+
+export function handleReview(data: Bytes): void {
+  const value = json.fromBytes(data).toObject();
+  if (!value) return;
+
+  const comment = value.get('comment');
+
+  const metadata = new ReviewMetadata('ipfs://' + dataSource.stringParam());
+  metadata.comment = comment ? comment.toString() : '';
   metadata.save();
 }

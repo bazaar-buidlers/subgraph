@@ -13,17 +13,17 @@ type Balance @entity {
 }
 
 type Listing @entity {
-  id:        ID!
-  vendor:    Account!
-  config:    BigInt!
-  limit:     BigInt!
-  allow:     BigInt!
-  royalty:   BigInt!
-  uri:       String!
-  prices:    [Price!]!       @derivedFrom(field: "listing")
-  purchases: [Purchase!]!    @derivedFrom(field: "listing")
-  reviews:   [Review!]!      @derivedFrom(field: "listing")
-  metadata:  ListingMetadata
+  id:          ID!
+  vendor:      Account!
+  config:      BigInt!
+  limit:       BigInt!
+  allow:       BigInt!
+  royalty:     BigInt!
+  uri:         String!
+  metadata:    ListingMetadata
+  prices:      [Price!]!       @derivedFrom(field: "listing")
+  purchases:   [Purchase!]!    @derivedFrom(field: "listing")
+  reviews:     [Review!]!      @derivedFrom(field: "listing")
 }
 
 type ListingMetadata @entity(immutable: true) {
@@ -53,9 +53,17 @@ type Purchase @entity(immutable: true) {
 }
 
 type Review @entity {
+  id:       ID!
+  account:  Account!
+  listing:  Listing!
+  rating:   BigInt!
+  uri:      String!
+  metadata: ReviewMetadata
+  created:  BigInt!
+  updated:  BigInt!
+}
+
+type ReviewMetadata @entity(immutable: true) {
   id:      ID!
-  account: Account!
-  listing: Listing!
-  rating:  BigInt!
-  uri:     String!
+  comment: String!
 }

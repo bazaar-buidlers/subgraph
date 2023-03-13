@@ -99,6 +99,8 @@ export function fetchReview(account: Account, listing: Listing): Review {
   review.account = account.id;
   review.listing = listing.id;
   review.rating = BigInt.zero();
+  review.created = BigInt.zero();
+  review.updated = BigInt.zero();
   review.uri = "";
   review.save();
   return review;
