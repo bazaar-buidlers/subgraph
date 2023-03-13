@@ -68,3 +68,5 @@ templates:
       abis:
         - name: Bazaar
           file: ./abis/Bazaar.json
+features:
+  - fullTextSearch
