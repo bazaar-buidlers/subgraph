@@ -110,6 +110,7 @@ export function handleReview(event: Review): void {
     review.updated = event.block.timestamp;
   }
 
+  review.metadata = event.params.uri;
   review.uri = event.params.uri;
   review.rating = event.params.rating;
   review.save();
