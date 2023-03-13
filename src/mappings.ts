@@ -1,5 +1,5 @@
 import { Address, BigInt } from '@graphprotocol/graph-ts';
-import { ListingMetadata} from '../generated/templates';
+import { ListingMetadata, ReviewMetadata } from '../generated/templates';
 
 import {
   createPurchase,
@@ -95,6 +95,11 @@ export function handleURI(event: URI): void {
 }
 
 export function handleReview(event: Review): void {
+  const uri = event.params.uri;
+  if (uri.startsWith('ipfs://')) {
+    ReviewMetadata.create(uri.substring(7));
+  }
+
   const account = fetchAccount(event.params.sender);
   const listing = fetchListing(event.params.id);
   const review = fetchReview(account, listing);
