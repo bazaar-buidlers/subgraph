@@ -44,7 +44,7 @@ type ListingMetadata @entity(immutable: true) {
   media:       [String!]!
   status:      String!
   platform:    String!
-  keywords:    [String!]!
+  genres:      [String!]!
   content:     String!
   allow:       [String!]!
 }

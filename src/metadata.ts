@@ -12,7 +12,7 @@ export function handleListing(data: Bytes): void {
   const platform = value.get('platform');
   const content = value.get('content');
   const media = value.get('media');
-  const keywords = value.get('keywords');
+  const genres = value.get('genres');
   const allow = value.get('allow');
 
   const metadata = new ListingMetadata('ipfs://' + dataSource.stringParam());
@@ -23,7 +23,7 @@ export function handleListing(data: Bytes): void {
   metadata.platform = platform ? platform.toString() : '';
   metadata.content = content ? content.toString() : '';
   metadata.media = media ? media.toArray().map<string>(value => value.toString()) : [];
-  metadata.keywords = keywords ? keywords.toArray().map<string>(value => value.toString()) : [];
+  metadata.genres = genres ? genres.toArray().map<string>(value => value.toString()) : [];
   metadata.allow = allow ? allow.toArray().map<string>(value => value.toString()) : [];
   metadata.save();
 }
