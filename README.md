@@ -1,5 +1,10 @@
 # Bazaar Subgraph
 
+## Networks
+
+- Arbitrum One `https://api.thegraph.com/subgraphs/name/bazaar-buidlers/bazaar-arbitrum-one`
+- Arbitrum Goerli `https://api.thegraph.com/subgraphs/name/bazaar-buidlers/arbitrum-goerli`
+
 ## Build
 
 ```
@@ -13,7 +18,7 @@ pnpm run build
 ```
 pnpm install -g @graphprotocol/graph-cli
 pnpm exec graph auth --product hosted-service <access-token>
-pnpm exec graph deploy --product hosted-service --network arbitrum-goerli bazaar-buidlers/arbitrum-goerli
+pnpm exec graph deploy --product hosted-service --network arbitrum-one bazaar-buidlers/bazaar-arbitrum-one
 ```
 
 ## Docker

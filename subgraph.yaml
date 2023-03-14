@@ -4,11 +4,11 @@ schema:
 dataSources:
   - name: Bazaar
     kind: ethereum
-    network: arbitrum-goerli
+    network: arbitrum-one
     source:
       abi: Bazaar
-      address: "0x4B36Ab67E5Ac6d82a2AAd29071aB6B1b0E61592D"
-      startBlock: 11073804
+      address: "0x76d8b9e38D9BAa56aB62fd832ECf0eEd79d7e7E9"
+      startBlock: 69783675
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
@@ -44,7 +44,7 @@ dataSources:
 templates:
   - name: ListingMetadata
     kind: file/ipfs
-    network: arbitrum-goerli
+    network: arbitrum-one
     mapping:
       apiVersion: 0.0.7
       language: wasm/assemblyscript
@@ -57,7 +57,7 @@ templates:
           file: ./abis/Bazaar.json
   - name: ReviewMetadata
     kind: file/ipfs
-    network: arbitrum-goerli
+    network: arbitrum-one
     mapping:
       apiVersion: 0.0.7
       language: wasm/assemblyscript
